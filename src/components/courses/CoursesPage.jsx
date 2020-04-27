@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
 
 import * as courseActions from "../../redux/actions/CourseActions";
 
@@ -18,7 +19,7 @@ class CoursesPage extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.dispatch(courseActions.createCourse(this.state.course));
+    this.props.actions.createCourse(this.state.course);
   };
 
   render() {
@@ -41,7 +42,7 @@ class CoursesPage extends Component {
 }
 
 CoursesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
   courses: PropTypes.array.isRequired,
 };
 
@@ -54,8 +55,12 @@ const mapStateToProps = (state) => {
 };
 
 //Esta função é usada para determinar que ações deverão ser
-// expostas ao
-// const mapDispatchToProps = dispatch =>
-//   bindActionCreators(, dispatch);
+// expostas
 
-export default connect(mapStateToProps)(CoursesPage);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(courseActions, dispatch),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
