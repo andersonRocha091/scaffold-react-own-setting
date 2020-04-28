@@ -10,16 +10,18 @@ import CourseList from "./CourseList";
 
 class CoursesPage extends Component {
   componentDidMount() {
-    this.props.actions
-      .loadCourses()
-      .then(() => {
-        this.props.actions.loadAuthors().catch((error) => {
-          alert("Load authors failed " + error);
-        });
-      })
-      .catch((error) => {
+    const { courses, authors, actions } = this.props;
+    if (courses.length === 0) {
+      actions.loadCourses().catch((error) => {
         alert("Load courses failed " + error);
       });
+    }
+
+    if (authors.length === 0) {
+      actions.loadAuthors().catch((error) => {
+        alert("Load authors failed " + error);
+      });
+    }
   }
 
   render() {
@@ -35,6 +37,7 @@ class CoursesPage extends Component {
 CoursesPage.propTypes = {
   actions: PropTypes.object.isRequired,
   courses: PropTypes.array.isRequired,
+  authors: PropTypes.array.isRequired,
 };
 
 // Esta função determina que parte do estado será passada
