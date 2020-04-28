@@ -19,13 +19,14 @@ function ManageCoursePage(props) {
   } = props;
   const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
-  const slug = props.match.params.slug;
 
   useEffect(() => {
     if (courses.length === 0) {
       loadCourses().catch((error) => {
         alert("Load courses failed " + error);
       });
+    } else {
+      setCourse({ ...props.course });
     }
 
     if (authors.length === 0) {
@@ -33,7 +34,7 @@ function ManageCoursePage(props) {
         alert("Load authors failed " + error);
       });
     }
-  }, []);
+  }, [props.course]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -74,13 +75,21 @@ ManageCoursePage.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
+function getCourseBySlug(courses, slug) {
+  return courses.find((course) => course.slug === slug || null);
+}
 // Esta função determina que parte do estado será passada
 // para o componente via props
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  const slug = ownProps.match.params.slug;
+  const course =
+    slug && state.courses.length > 0
+      ? getCourseBySlug(state.courses, slug)
+      : newCourse;
   return {
     courses: state.courses,
     authors: state.authors,
-    course: newCourse,
+    course: course,
   };
 };
 
