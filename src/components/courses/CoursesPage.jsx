@@ -4,14 +4,22 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 
 import * as courseActions from "../../redux/actions/CourseActions";
+import * as authorActions from "../../redux/actions/AuthorActions";
 
 import CourseList from "./CourseList";
 
 class CoursesPage extends Component {
   componentDidMount() {
-    this.props.actions.loadCourses().catch((error) => {
-      alert("Load courses failed " + error);
-    });
+    this.props.actions
+      .loadCourses()
+      .then(() => {
+        this.props.actions.loadAuthors().catch((error) => {
+          alert("Load authors failed " + error);
+        });
+      })
+      .catch((error) => {
+        alert("Load courses failed " + error);
+      });
   }
 
   render() {
@@ -33,7 +41,18 @@ CoursesPage.propTypes = {
 // para o componente via props
 const mapStateToProps = (state) => {
   return {
-    courses: state.courses,
+    courses:
+      state.authors.length === 0
+        ? []
+        : state.courses.map((course) => {
+            return {
+              ...course,
+              authorName: state.authors.find(
+                (author) => author.id === course.authorId
+              ).name,
+            };
+          }),
+    authors: state.authors,
   };
 };
 
@@ -42,7 +61,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(courseActions, dispatch),
+    actions: {
+      loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
+      loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
+    },
   };
 };
 
