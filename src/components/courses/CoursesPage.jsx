@@ -9,6 +9,7 @@ import * as authorActions from "../../redux/actions/AuthorActions";
 
 import CourseList from "./CourseList";
 import Spinner from "../common/Spinner";
+import { toast } from "react-toastify";
 
 class CoursesPage extends Component {
   componentDidMount() {
@@ -26,6 +27,13 @@ class CoursesPage extends Component {
     }
   }
 
+  handleDeleteCourse = (course) => {
+    toast.success("Course deleted.");
+    this.props.actions.deleteCourse(course).catch((error) => {
+      toast.error("Delete Failed." + error.message, { autoClose: false });
+    });
+  };
+
   render() {
     return (
       <>
@@ -37,7 +45,10 @@ class CoursesPage extends Component {
             <Link className="btn btn-primary add-course" to="/course">
               Add Course
             </Link>
-            <CourseList courses={this.props.courses} />
+            <CourseList
+              onDeleteClick={this.handleDeleteCourse}
+              courses={this.props.courses}
+            />
           </>
         )}
       </>
@@ -80,6 +91,7 @@ const mapDispatchToProps = (dispatch) => {
     actions: {
       loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
       loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
+      deleteCourse: bindActionCreators(courseActions.deleteCourse, dispatch),
     },
   };
 };

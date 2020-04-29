@@ -11,6 +11,8 @@ export default function courseReducer(state = InitialState.courses, action) {
       );
     case ActionTypes.LOAD_COURSES_SUCCESS:
       return action.courses;
+    case ActionTypes.DELETE_COURSE_OPTIMISTIC:
+      return state.filter((course) => course.id !== action.course.id);
     default:
       return state;
   }
