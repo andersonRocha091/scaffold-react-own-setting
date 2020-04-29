@@ -50,10 +50,15 @@ function ManageCoursePage(props) {
     event.preventDefault();
     setSaving(true);
     // if (!formIsValid()) return;
-    saveCourse(course).then(() => {
-      history.push("/courses");
-      toast.success("Course successfully saved.");
-    });
+    saveCourse(course)
+      .then(() => {
+        history.push("/courses");
+        toast.success("Course successfully saved.");
+      })
+      .catch((error) => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
+      });
   }
 
   return authors.length === 0 || courses.length === 0 ? (
