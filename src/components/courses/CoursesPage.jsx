@@ -8,6 +8,7 @@ import * as courseActions from "../../redux/actions/CourseActions";
 import * as authorActions from "../../redux/actions/AuthorActions";
 
 import CourseList from "./CourseList";
+import Spinner from "../common/Spinner";
 
 class CoursesPage extends Component {
   componentDidMount() {
@@ -32,6 +33,7 @@ class CoursesPage extends Component {
         <Link className="btn btn-primary add-course" to="/course">
           Add Course
         </Link>
+        <Spinner />
         <CourseList courses={this.props.courses} />
       </>
     );
