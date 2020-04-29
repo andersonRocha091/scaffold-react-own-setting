@@ -46,7 +46,6 @@ function ManageCoursePage(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    debugger;
     // if (!formIsValid()) return;
     saveCourse(course).then(() => {
       history.push("/courses");

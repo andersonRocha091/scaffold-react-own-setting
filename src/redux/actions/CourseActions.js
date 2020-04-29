@@ -1,9 +1,8 @@
-import ActionTypes from "./ActionTypes";
+import * as ActionTypes from "./ActionTypes";
 import * as courseApi from "../../api/courseApi";
 import { beginApiCall } from "./ApiStatusActions";
 
 export function createCourseSuccess(course) {
-  debugger;
   return { type: ActionTypes.CREATE_COURSE_SUCCESS, course: course };
 }
 

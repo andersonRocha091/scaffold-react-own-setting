@@ -1,4 +1,4 @@
-import ActionTypes from "./ActionTypes";
+import * as ActionTypes from "./ActionTypes";
 import * as authorApi from "../../api/authorApi";
 import { beginApiCall } from "./ApiStatusActions";
 

@@ -30,11 +30,16 @@ class CoursesPage extends Component {
     return (
       <>
         <h2>Courses</h2>
-        <Link className="btn btn-primary add-course" to="/course">
-          Add Course
-        </Link>
-        <Spinner />
-        <CourseList courses={this.props.courses} />
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <Link className="btn btn-primary add-course" to="/course">
+              Add Course
+            </Link>
+            <CourseList courses={this.props.courses} />
+          </>
+        )}
       </>
     );
   }
@@ -44,6 +49,7 @@ CoursesPage.propTypes = {
   actions: PropTypes.object.isRequired,
   courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 // Esta função determina que parte do estado será passada
@@ -62,6 +68,7 @@ const mapStateToProps = (state) => {
             };
           }),
     authors: state.authors,
+    loading: state.apiCallsInProgress > 0,
   };
 };
 

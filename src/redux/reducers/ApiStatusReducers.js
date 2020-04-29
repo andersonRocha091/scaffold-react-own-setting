@@ -1,4 +1,4 @@
-import ActionTypes from "../actions/ActionTypes";
+import * as ActionTypes from "../actions/ActionTypes";
 import InitialState from "./InitialState";
 
 function actionTypeEndsInSuccess(type) {
@@ -14,5 +14,6 @@ export default function apiCallStatusReducer(
   } else if (actionTypeEndsInSuccess(action.type)) {
     return state - 1;
   }
+
   return state;
 }

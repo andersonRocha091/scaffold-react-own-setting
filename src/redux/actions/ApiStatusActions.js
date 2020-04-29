@@ -1,5 +1,5 @@
-import actionTypes from "./ActionTypes";
+import * as ActionTypes from "./ActionTypes";
 
 export function beginApiCall() {
-  return { type: actionTypes.BEGIN_API_CALL };
+  return { type: ActionTypes.BEGIN_API_CALL };
 }
