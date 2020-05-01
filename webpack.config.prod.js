@@ -1,8 +1,8 @@
 const webpack = require("webpack");
 const path = require("path");
+const WebpackBundleAnalyzer = require("webpack-bundle-analyzer");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const WebpackBundleAnalyzer = require("webpack-bundle-analyzer");
 
 process.env.NODE_ENV = "production";
 
